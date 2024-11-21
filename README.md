@@ -4,6 +4,7 @@
 - Ramisha Chowdhury 
 - Aaleia Fernado
 - Maya Jamaddar
+- Michelle Wen
 - Gavin Xiao
 
 ## Getting Started
