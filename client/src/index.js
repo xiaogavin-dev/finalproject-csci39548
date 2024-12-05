@@ -6,8 +6,15 @@ import App from './App';
 import Information from './pages/information'
 import Calculator from './pages/calculator';
 import reportWebVitals from './reportWebVitals';
+import localforage from 'localforage';
 
 const root = document.getElementById("root");
+
+localforage.config({
+  driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE, localforage.WEBSQL],
+  name: "db"
+  
+})
 
 ReactDOM.createRoot(root).render(
   <BrowserRouter>
