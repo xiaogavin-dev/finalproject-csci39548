@@ -7,6 +7,7 @@ import Information from './pages/information'
 import Calculator from './pages/calculator';
 import reportWebVitals from './reportWebVitals';
 import localforage from 'localforage';
+import Layout from './Layout';
 
 const root = document.getElementById("root");
 
@@ -17,13 +18,18 @@ localforage.config({
 })
 
 ReactDOM.createRoot(root).render(
+  <>
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/information" element={<Information /> } />
-      <Route path="/calculator" element={<Calculator /> } />
+      <Route path='/' element={<Layout />}>
+        <Route path="/" element={<App />} />
+        <Route path="/information" element={<Information /> } />
+        <Route path="/calculator" element={<Calculator /> } />
+      </Route>
+
     </Routes>
   </BrowserRouter>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function
