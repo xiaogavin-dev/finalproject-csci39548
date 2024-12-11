@@ -1,20 +1,23 @@
 /* styles.css */
 
-.response-container {
+.image-background {
     background-image: url('../public/pokemon.calc.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
-    padding: 20px;
     color: #333;
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f9f9f9;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    max-width: 100vw;
+}
+
+.response-container {
+    /* margin: 0;
+    padding: 0; */
+    /* height: 100vh; */
+    /* max-width: 100vw; */
+    padding: 60px;
 }
 
 .back-button {
@@ -32,7 +35,7 @@
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 20px;
-    margin-top: 60px;
+    /* margin-top: 60px; */
     padding-top: 40px;
     text-transform: capitalize;
 }

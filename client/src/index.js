@@ -41,7 +41,6 @@ ReactDOM.createRoot(root).render(
             }
           /> {/* Response */}
         </Route>
-
       </Routes>
     </BrowserRouter>
   </>

@@ -22,35 +22,37 @@ const ResponsePage = () => {
     const { name, weakness, resistance, immunity } = pokemonData;
 
     return (
-        <div className="response-container">
-            <button className="back-button" onClick={() => navigate(-1)}>
-                ←
-            </button>
-            <h1 className="pokemon-name">{name}</h1>
-            <div className="type-container">
-                <div className="type-box">
-                    <h2>Weakness</h2>
-                    {weakness.map((type) => (
-                        <div key={type} className={`type-label ${type}`}>
-                            {type}
-                        </div>
-                    ))}
-                </div>
-                <div className="type-box">
-                    <h2>Resistance</h2>
-                    {resistance.map((type) => (
-                        <div key={type} className={`type-label ${type}`}>
-                            {type}
-                        </div>
-                    ))}
-                </div>
-                <div className="type-box">
-                    <h2>Immunity</h2>
-                    {immunity.map((type) => (
-                        <div key={type} className={`type-label ${type}`}>
-                            {type}
-                        </div>
-                    ))}
+        <div className="image-background">
+            <div className="response-container">
+                <button className="back-button" onClick={() => navigate(-1)}>
+                    ←
+                </button>
+                <h1 className="pokemon-name">{name}</h1>
+                <div className="type-container">
+                    <div className="type-box">
+                        <h2>Weakness</h2>
+                        {weakness.map((type) => (
+                            <div key={type} className={`type-label ${type}`}>
+                                {type}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="type-box">
+                        <h2>Resistance</h2>
+                        {resistance.map((type) => (
+                            <div key={type} className={`type-label ${type}`}>
+                                {type}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="type-box">
+                        <h2>Immunity</h2>
+                        {immunity.map((type) => (
+                            <div key={type} className={`type-label ${type}`}>
+                                {type}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
