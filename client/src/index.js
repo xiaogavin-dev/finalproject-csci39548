@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import Information from './pages/information'
 import Calculator from './pages/calculator';
+import ResponsePage from "./pages/response";
 import reportWebVitals from './reportWebVitals';
 import localforage from 'localforage';
 import Layout from './Layout';
@@ -24,7 +25,21 @@ ReactDOM.createRoot(root).render(
       <Route path='/' element={<Layout />}>
         <Route path="/" element={<App />} />
         <Route path="/information" element={<Information /> } />
-        <Route path="/calculator" element={<Calculator /> } />
+          <Route path="/calculator" element={<Calculator /> } />
+	  <Route
+                    path="response"
+                    element={
+                        <ResponsePage
+                            pokemonData={{
+                                name: "Pikachu",
+                                weakness: ["ground"],
+                                resistance: ["flying", "steel", "electric"],
+                                immunity: [],
+                            }}
+                            onBack={() => window.history.back()}
+                        />
+                    }
+                /> {/* Response */}
       </Route>
 
     </Routes>

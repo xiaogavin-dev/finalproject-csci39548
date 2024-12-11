@@ -11,7 +11,7 @@ const Layout = () => {
       </div>
       <Outlet />
     </>
-  )
+  );
 };
 
 export default Layout;
