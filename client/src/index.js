@@ -15,35 +15,35 @@ const root = document.getElementById("root");
 localforage.config({
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE, localforage.WEBSQL],
   name: "db"
-  
+
 })
 
 ReactDOM.createRoot(root).render(
   <>
-  <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route path="/" element={<App />} />
-        <Route path="/information" element={<Information /> } />
-          <Route path="/calculator" element={<Calculator /> } />
-	  <Route
-                    path="response"
-                    element={
-                        <ResponsePage
-                            pokemonData={{
-                                name: "Pikachu",
-                                weakness: ["ground"],
-                                resistance: ["flying", "steel", "electric"],
-                                immunity: [],
-                            }}
-                            onBack={() => window.history.back()}
-                        />
-                    }
-                /> {/* Response */}
-      </Route>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route path="/" element={<App />} />
+          <Route path="/information" element={<Information />} />
+          <Route path="/calculator" element={<Calculator />} />
+          <Route
+            path="response"
+            element={
+              <ResponsePage
+                pokemonData={{
+                  name: "Pikachu",
+                  weakness: ["ground"],
+                  resistance: ["flying", "steel", "electric"],
+                  immunity: [],
+                }}
+                onBack={() => window.history.back()}
+              />
+            }
+          /> {/* Response */}
+        </Route>
 
-    </Routes>
-  </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
   </>
 );
 
