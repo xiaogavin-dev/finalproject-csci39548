@@ -13,18 +13,14 @@ const Calculator = () => {
     const [allPokemonNames, setAllPokemonNames] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
-    const suggestionsRef = useRef(null); // Reference for the suggestions list
-    const inputRef = useRef(null); // Reference for the input field
-
-
-    // PLACEHOLDER: remember to replace with pokeAPI data later
-    //const allPokemonNames = [];
+    const suggestionsRef = useRef(null); // ref for the suggestions list
+    const inputRef = useRef(null); // ref for the input field
 
 
     useEffect(() => {
         const fetchPokemonNames = async () => {
             try {
-                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10000'); // Get all Pokémon
+                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10000'); // api call for all pokemon
                 const data = await response.json();
                 const names = data.results.map((pokemon) => pokemon.name);
                 setAllPokemonNames(names);
