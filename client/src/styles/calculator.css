@@ -55,27 +55,23 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    position: absolute;
-    top: 40px;
-    left: 0;
     width: 100%;
     background-color: white;
     color: black;
     border: 1px solid #ccc;
     border-radius: 8px;
-    z-index: 10;
-    max-height: 150px;
+    z-index: 1000;
+    max-height: 200px;
     overflow-y: auto;
 }
 
 .suggestions-list li {
     padding: 8px 10px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.1s;
 }
 
 .suggestions-list li:hover,
-.suggestions-list li:focus,
 .suggestions-list li.highlighted {
     background-color: #ffcc00;
     color: black;
@@ -100,11 +96,11 @@
     opacity: 1;
 }
 
-/*.send-button.active {
+.send-button.active {
     background-color: #ffcc00;
     cursor: pointer;
     opacity: 1;
-}*/
+}
 
 .send-button:hover {
     opacity: 0.7;
