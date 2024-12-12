@@ -60,6 +60,8 @@ app.get('/pokemon/:id', async (req, res) => {
             const pokemonData = await fetchData(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
             //console.log(`Fetched Pokémon data:`, pokemonData); //Debug 
             const types = pokemonData.types.map((typeObj) => typeObj.type.name);
+            //If there is one type do what you had before
+            //How to check if there are more than one type?
 
             //Fetch type effectiveness data
             const effectivenessPromise = types.map((type) => fetchData(`https://pokeapi.co/api/v2/type/${type}`));
@@ -84,9 +86,15 @@ app.get('/pokemon/:id', async (req, res) => {
                     console.warn(`No damage relations found for type: ${typeData.name}`);
                 }
             });
+            
+            const remove = weakness.intersection(resistance);
+            remove.forEach(val => {
+                weakness.delete(val);
+                resistance.delete(val);
+            });
 
             const sprite = pokemonData.sprites.front_default;
-
+            
             const result = { //Result form
                 name: pokemonData.name, //Name of the pokemon
                 type: types, //Types of the pokemon
