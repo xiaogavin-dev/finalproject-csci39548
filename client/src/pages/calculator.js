@@ -1,7 +1,8 @@
 import '../styles/calculator.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
- 
+import pokemonJson from "../public/pokemon_names.json"
+
 const Calculator = () => {
 
     // USING MOCK DATA FOR NOW
@@ -15,17 +16,18 @@ const Calculator = () => {
 
 
     // PLACEHOLDER: remember to replace with pokeAPI data later
-    //const allPokemonNames = [];
+    const allPokemonNames = pokemonJson;
+    // console.log(allPokemonNames)
 
     useEffect(() => {
-        //filter suggestions dynamically
-        //const filteredSuggestions = allPokemonNames.filter((name) =>
-        //    name.toLowerCase().startsWith(searchInput.toLowerCase())
-        //);
-        //setSuggestions(filteredSuggestions);
-        //setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
-        setIsValid(true);
-	setHighlightIndex(-1); //reset highlight
+        // filter suggestions dynamically
+        const filteredSuggestions = allPokemonNames.filter((name) =>
+            name.toLowerCase().startsWith(searchInput.toLowerCase())
+        );
+
+        setSuggestions(filteredSuggestions);
+        setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
+        setHighlightIndex(-1); //reset highlight
     }, [searchInput]);
 
     const handleChange = (e) => {
@@ -130,13 +132,13 @@ const Calculator = () => {
             setErrorMessage('Please enter a valid Pokémon name.');
         }*/
     };
-    
-    
+
+
     return (
-	<div className="container_calc">
+        <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-		<div className="instruction-text">Enter a Pokémon name or id:</div>
+		<div className="instruction-text">Enter a Pokémon name:</div>
                 <div className="input-wrapper">
                     <input
                         type="text"
@@ -146,10 +148,23 @@ const Calculator = () => {
                         onChange={handleChange}
                         //onFocus={() => setShowSuggestions(true)}
                         onBlur={handleBlur}
-			onKeyDown={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
                     />
-                    
+                    {showSuggestions && suggestions.length > 0 && (
+                        <ul className="suggestions-list">
+                            {suggestions.map((suggestion, index) => (
+                                <li
+                                    key={suggestion}
+                                    onMouseDown={() => handleSuggestionClick(suggestion)} //prevent blur firing
+                                    className={highlightIndex === index ? 'highlighted' : ''}
+                                    tabIndex="0"
+                                >
+                                    {suggestion}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
                 <button
                     className={`send-button`}
