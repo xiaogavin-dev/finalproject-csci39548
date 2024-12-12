@@ -1,21 +1,20 @@
 import '../styles/calculator.css'
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
- 
+
 const Calculator = () => {
 
     const [searchInput, setSearchInput] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    // const [isValid, setIsValid] = useState(false);
+    // const [errorMessage, setErrorMessage] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [highlightIndex, setHighlightIndex] = useState(-1);
-    
+
     const [allPokemonNames, setAllPokemonNames] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
     const suggestionsRef = useRef(null); // ref for the suggestions list
     const inputRef = useRef(null); // ref for the input field
-
 
     useEffect(() => {
         const fetchPokemonNames = async () => {
@@ -31,7 +30,6 @@ const Calculator = () => {
         fetchPokemonNames();
     }, []);
 
-    
     useEffect(() => {
         // filter suggestions dynamically
         const filteredSuggestions = allPokemonNames.filter((name) =>
@@ -40,7 +38,7 @@ const Calculator = () => {
         setSuggestions(filteredSuggestions);
         //setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
         //setIsValid(true);
-	setHighlightIndex(-1); //reset highlight
+        setHighlightIndex(-1); //reset highlight
     }, [searchInput, allPokemonNames]);
 
     const handleChange = (e) => {
@@ -52,12 +50,12 @@ const Calculator = () => {
     const handleFocus = () => {
         setShowSuggestions(true);
     };
-    
+
     const handleBlur = (e) => {
         setTimeout(() => {
-            if (!suggestionsRef.current.contains(e.relatedTarget)) {
-                setShowSuggestions(false);
-            }
+            // if (!suggestionsRef.current.contains(e.relatedTarget)) {
+            setShowSuggestions(false);
+            // }
         }, 150);
     };
 
@@ -78,7 +76,7 @@ const Calculator = () => {
                 // select highlighted
                 if (highlightIndex >= 0 && suggestions[highlightIndex]) {
                     setSearchInput(suggestions[highlightIndex]);
-		    setSuggestions([]);
+                    setSuggestions([]);
                     //setShowSuggestions(false);
                 }
             }
@@ -88,12 +86,12 @@ const Calculator = () => {
     const handleSuggestionClick = (suggestion) => {
         setSearchInput(suggestion);
         //setShowSuggestions(false);
-	setSuggestions([]);
+        setSuggestions([]);
     };
 
 
     const navigate = useNavigate();
-    
+
     const handleSubmit = async () => {
         if (!searchInput) return;
 
@@ -134,28 +132,28 @@ const Calculator = () => {
             setErrorMessage('Please enter a valid Pokémon name.');
         }*/
     };
-    
-    
+
+
     return (
-	<div className="container_calc">
+        <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-		<div className="instruction-text">Enter a Pokémon name or id:</div>
+                <div className="instruction-text">Enter a Pokémon name</div>
                 <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
-			ref={inputRef}
-			type="text"
+                        ref={inputRef}
+                        type="text"
                         className="search-bar"
                         placeholder={!searchInput ? 'Search' : ''}
                         value={searchInput}
                         onChange={handleChange}
                         onFocus={handleFocus}
                         onBlur={handleBlur}
-			onKeyDown={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
                     />
-                    
-                {showSuggestions && suggestions.length > 0 && (
+
+                    {showSuggestions && suggestions.length > 0 && (
                         <ul
                             ref={suggestionsRef}
                             className="suggestions-list"
