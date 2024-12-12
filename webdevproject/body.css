@@ -1,0 +1,60 @@
+/* styles.css */
+body {
+    background-image: url('pokemon.homepage.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* Navbar styling */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(185, 20, 20, 0.7); /* Transparent black background */
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    z-index: 1000; /* Keeps navbar on top */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+
+.yellow-square {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 310px;
+    height: 250px;
+    background-color: rgb(252, 238, 167);
+    transform: translate(-50%, -50%);
+}
+p {
+    text-align: center;
+    font-size: 1.2em;
+    color: black;
+    font-family: 'Dancing Script', cursive;
+    line-height: 2.2;
+}
+
+
+
+

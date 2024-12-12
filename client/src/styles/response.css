@@ -1,0 +1,74 @@
+/* styles.css */
+
+.image-background {
+    background-image: url('../public/pokemon.calc.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.response-container {
+    /* margin: 0;
+    padding: 0; */
+    /* height: 100vh; */
+    /* max-width: 100vw; */
+    padding: 60px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+}
+
+.pokemon-name {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    /* margin-top: 60px; */
+    padding-top: 40px;
+    text-transform: capitalize;
+}
+
+.type-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.type-box {
+    background-color: rgba(255, 204, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.type-label {
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+/* example response item bg colors to update later*/
+.water { background-color: #6890f0; }
+.rock { background-color: #b8a038; }
+.electric { background-color: #f8d030; }
+.fire { background-color: #f08030; }
+.grass { background-color: #78c850; }
+.ice { background-color: #98d8d8; }
+.ghost { background-color: #705898; }
