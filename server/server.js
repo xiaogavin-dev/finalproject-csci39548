@@ -74,8 +74,8 @@ app.get('/pokemon/:id', async (req, res) => {
                     if (typeData.damage_relations.double_damage_from) {
                         typeData.damage_relations.double_damage_from.forEach((type) => weakness.add(type.name));
                     }
-                    if (typeData.damage_relations.double_damage_to) {
-                        typeData.damage_relations.double_damage_to.forEach((type) => resistance.add(type.name));
+                    if (typeData.damage_relations.half_damage_from) {
+                        typeData.damage_relations.half_damage_from.forEach((type) => resistance.add(type.name));
                     }
                     if (typeData.damage_relations.no_damage_from) {
                         typeData.damage_relations.no_damage_from.forEach((type) => immunity.add(type.name));

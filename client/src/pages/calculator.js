@@ -72,27 +72,65 @@ const Calculator = () => {
 
 
     const navigate = useNavigate();
+    
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch(`/pokemon/${searchInput}`, {
+                method: 'GET',
+            });
 
-    const handleSubmit = () => {
-        if (isValid) {
+            if (!response.ok) {
+                throw new Error('Error fetching data');
+            } 
+
+            const data = await response.json();
+            if (!data || Object.keys(data).length === 0) {
+                throw new Error('No data returned from the server');
+            }
+
+            navigate('/response', {
+                state: {
+                    pokemonData: {
+                        name: data.name,
+                        weakness: data.weakness,
+                        resistance: data.resistance,
+                        immunity: data.immunity,
+                    },
+                },
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage('Please enter a valid Pokémon name.');
+        }
+
+
+        /*if (isValid) {
             console.log(`Searching for ${searchInput}`);
             setErrorMessage(''); //clear error
+
+            const data = Object.values(dataToPass);
+            console.log(data);
+
+            const pokemonWeakness = data[4];
+            const pokemonResistance = data[5];
+            const pokemonImmunity = data[6];
 
             // go to response page
             navigate('/response', {
                 state: {
-                    pokemonData: { // MOCK DATA
+                    pokemonData: {
                         name: searchInput,
-                        weakness: ["water", "rock", "electric"],
-                        resistance: ["fire", "grass", "ice"],
-                        immunity: ["ghost"],
+                        weakness: [],
+                        resistance: [],
+                        immunity: [],
                     },
                 },
             });
 
         } else {
             setErrorMessage('Please enter a valid Pokémon name.');
-        }
+        }*/
     };
 
 
@@ -100,7 +138,7 @@ const Calculator = () => {
         <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-                <div className="instruction-text">Enter a Pokémon name:</div>
+		<div className="instruction-text">Enter a Pokémon name:</div>
                 <div className="input-wrapper">
                     <input
                         type="text"
@@ -108,7 +146,7 @@ const Calculator = () => {
                         placeholder={!searchInput ? 'Search' : ''}
                         value={searchInput}
                         onChange={handleChange}
-                        onFocus={() => setShowSuggestions(true)}
+                        //onFocus={() => setShowSuggestions(true)}
                         onBlur={handleBlur}
                         onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
@@ -129,10 +167,10 @@ const Calculator = () => {
                     )}
                 </div>
                 <button
-                    className={`send-button ${isValid ? 'active' : ''}`}
+                    className={`send-button`}
                     onClick={handleSubmit}
-                    disabled={!isValid}
-                    aria-disabled={!isValid}
+                    //disabled={!isValid}
+                    //aria-disabled={!isValid}
                 >
                     Send
                 </button>

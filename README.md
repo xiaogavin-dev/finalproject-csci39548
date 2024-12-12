@@ -11,6 +11,7 @@
 
 Project is split up into two folders, `client` and `server` 
 `client` is reactjs frontend, `server` is expressjs backend
+Both frontend and backend need to start for page to work
 
 Install reactjs frontend: 
 ```bash
