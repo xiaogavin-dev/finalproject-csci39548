@@ -21,13 +21,15 @@ const ResponsePage = () => {
 
     const { name, weakness, resistance, immunity } = pokemonData;
 
-    return (
+    return ( 
         <div className="image-background">
             <div className="response-container">
+                <div className="header-container">
                 <button className="back-button" onClick={() => navigate(-1)}>
-                    ← Go back to calculator
+                    ← Back
                 </button>
-                <h1 className="pokemon-name">{name}</h1>
+                <h1 className="pokemon-name">{name.charAt(0).toUpperCase() + name.slice(1)}</h1>
+            </div>
                 <div className="type-container">
                     <div className="type-box">
                         <h2>Weakness</h2>

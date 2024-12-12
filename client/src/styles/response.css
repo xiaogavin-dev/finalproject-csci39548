@@ -20,23 +20,45 @@
     padding: 60px;
 }
 
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 25px;
+}
+
 .back-button {
     position: absolute;
-    top: 60px;
-    left: 20px;
-    background: none;
+    left: 10px;
+    display: inline-block;
+    background-color: rgba(255, 204, 0, 0.7);
     border: none;
-    font-size: 24px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+    text-decoration: none;
     cursor: pointer;
-    color: #555;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #ffcc00;
+    transform: scale(1.05);
+}
+
+.back-button:active {
+    transform: scale(0.95);
 }
 
 .pokemon-name {
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 20px;
-    /* margin-top: 60px; */
-    padding-top: 40px;
+    margin: 0;
     text-transform: capitalize;
 }
 
