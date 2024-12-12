@@ -6,13 +6,15 @@ import pokemonJson from "../public/pokemon_names.json"
 const Calculator = () => {
 
     const [searchInput, setSearchInput] = useState('');
-    // const [isValid, setIsValid] = useState(false);
+    const [isValid, setIsValid] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(false);
     // const [errorMessage, setErrorMessage] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [highlightIndex, setHighlightIndex] = useState(-1);
 
 
     // PLACEHOLDER: remember to replace with pokeAPI data later
+    // eslint-disable-next-line 
     const allPokemonNames = pokemonJson;
     // console.log(allPokemonNames)
 
@@ -129,7 +131,7 @@ const Calculator = () => {
                 <div className="instruction-text">Enter a Pokémon name</div>
                 <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
-                        ref={inputRef}
+                        // ref={inputRef}
                         type="text"
                         className="search-bar"
                         placeholder={!searchInput ? 'Search' : ''}
