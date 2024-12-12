@@ -1,21 +1,20 @@
 import '../styles/calculator.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import pokemonJson from "../public/pokemon_names.json"
 
 const Calculator = () => {
 
-    // USING MOCK DATA FOR NOW
-
     const [searchInput, setSearchInput] = useState('');
     const [isValid, setIsValid] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    // const [errorMessage, setErrorMessage] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [highlightIndex, setHighlightIndex] = useState(-1);
 
 
     // PLACEHOLDER: remember to replace with pokeAPI data later
+    // eslint-disable-next-line 
     const allPokemonNames = pokemonJson;
     // console.log(allPokemonNames)
 
@@ -33,13 +32,19 @@ const Calculator = () => {
     const handleChange = (e) => {
         setSearchInput(e.target.value);
         //setErrorMessage(''); //clear error
+        //setShowSuggestions(true);
+    };
+
+    const handleFocus = () => {
         setShowSuggestions(true);
     };
 
-    const handleBlur = () => {
-        //reset placeholder if empty input, close suggestions box
-        if (searchInput.trim() === '') setSearchInput('');
-        setShowSuggestions(false);
+    const handleBlur = (e) => {
+        setTimeout(() => {
+            // if (!suggestionsRef.current.contains(e.relatedTarget)) {
+            setShowSuggestions(false);
+            // }
+        }, 150);
     };
 
     //keyboard arrowkeys functionality
@@ -59,7 +64,8 @@ const Calculator = () => {
                 // select highlighted
                 if (highlightIndex >= 0 && suggestions[highlightIndex]) {
                     setSearchInput(suggestions[highlightIndex]);
-                    setShowSuggestions(false);
+                    setSuggestions([]);
+                    //setShowSuggestions(false);
                 }
             }
         }
@@ -67,41 +73,23 @@ const Calculator = () => {
 
     const handleSuggestionClick = (suggestion) => {
         setSearchInput(suggestion);
-        setShowSuggestions(false);
+        //setShowSuggestions(false);
+        setSuggestions([]);
     };
 
 
     const navigate = useNavigate();
-    
+
     const handleSubmit = async () => {
+        if (!searchInput) return;
+
         try {
-            const response = await fetch(`/pokemon/${searchInput}`, {
-                method: 'GET',
-            });
-
-            if (!response.ok) {
-                throw new Error('Error fetching data');
-            } 
-
+            const response = await fetch(`/pokemon/${searchInput.toLowerCase()}`);
+            if (!response.ok) throw new Error('Error fetching data');
             const data = await response.json();
-            if (!data || Object.keys(data).length === 0) {
-                throw new Error('No data returned from the server');
-            }
-
-            navigate('/response', {
-                state: {
-                    pokemonData: {
-                        name: data.name,
-                        weakness: data.weakness,
-                        resistance: data.resistance,
-                        immunity: data.immunity,
-                    },
-                },
-            });
-
+            navigate('/response', { state: { pokemonData: data } });
         } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('Please enter a valid Pokémon name.');
+            console.error('Error fetching Pokémon data:', error);
         }
 
 
@@ -134,19 +122,22 @@ const Calculator = () => {
     };
 
 
+
+
     return (
         <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-		<div className="instruction-text">Enter a Pokémon name:</div>
-                <div className="input-wrapper">
+                <div className="instruction-text">Enter a Pokémon name</div>
+                <div className="input-wrapper" style={{ position: 'relative' }}>
                     <input
+                        // ref={inputRef}
                         type="text"
                         className="search-bar"
                         placeholder={!searchInput ? 'Search' : ''}
                         value={searchInput}
                         onChange={handleChange}
-                        //onFocus={() => setShowSuggestions(true)}
+                        onFocus={handleFocus}
                         onBlur={handleBlur}
                         onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
@@ -166,16 +157,10 @@ const Calculator = () => {
                         </ul>
                     )}
                 </div>
-                <button
-                    className={`send-button`}
-                    onClick={handleSubmit}
-                    //disabled={!isValid}
-                    //aria-disabled={!isValid}
-                >
+                <button className="send-button" onClick={handleSubmit}>
                     Send
                 </button>
             </div>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
     );
 }

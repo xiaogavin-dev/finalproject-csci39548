@@ -86,95 +86,19 @@ app.get('/pokemon/:id', async (req, res) => {
                     console.warn(`No damage relations found for type: ${typeData.name}`);
                 }
             });
-
+            
             const remove = weakness.intersection(resistance);
             remove.forEach(val => {
                 weakness.delete(val);
                 resistance.delete(val);
             });
 
-             /*
-             if(types.length === 0)
-             {
-               // Do what you had
-             } else if (types.length != 0) {
-                //If there are two typing
-                const weakness1 = new Set();
-                const resistance1 = new Set();
-                const weakness2 = new Set();
-                const resistance2 = new Set();
-                const immunity = new Set();
-                //Get weakness and resistane for first typing
-                const effectivenessPromise = types.map((type) => fetchData(`https://pokeapi.co/api/v2/type/${type}`));
-                const effectivenessData = await Promise.all(effectivenessPromise);
-                effectivenessData.forEach((typeData) => {
-                    if (typeData.damage_relations) {
-                        if (typeData.damage_relations.double_damage_from) {
-                            typeData.damage_relations.double_damage_from.forEach((type) => weakness1.add(type.name));
-                        }
-                        if (typeData.damage_relations.half_damage_from) {
-                            typeData.damage_relations.half_damage_from.forEach((type) => resistance1.add(type.name));
-                        }
-                        if (typeData.damage_relations.no_damage_from) {
-                            typeData.damage_relations.no_damage_from.forEach((type) => immunity.add(type.name));
-                        }
-
-                    } else {
-                        console.warn(`No damage relations found for type: ${typeData.name}`);
-                    }
-                });
-                //Get weakness and resistance for second typing
-                effectivenessPromise = types.map((type) => fetchData(`https://pokeapi.co/api/v2/type/${type}`));
-                effectivenessData = await Promise.all(effectivenessPromise);
-                effectivenessData.forEach((typeData) => {
-                    if (typeData.damage_relations) {
-                        if (typeData.damage_relations.double_damage_from) {
-                            typeData.damage_relations.double_damage_from.forEach((type) => weakness2.add(type.name));
-                        }
-                        if (typeData.damage_relations.half_damage_from) {
-                            typeData.damage_relations.half_damage_from.forEach((type) => resistance2.add(type.name));
-                        }
-                        if (typeData.damage_relations.no_damage_from) {
-                            typeData.damage_relations.no_damage_from.forEach((type) => immunity.add(type.name));
-                        }
-
-                    } else {
-                        console.warn(`No damage relations found for type: ${typeData.name}`);
-                    }
-                });
-                //Remove
-                const remove = new Set();
-                remove.add(weakness1.intersection(resistance2));
-                remove.add(resistance2.intersection(resistance1));
-
-                const weakness = new Set();
-                const resistance = new Set();
-
-                for (const weak in weakness1) {
-                    weakness.add(weak);
-                }
-                for (const weak in weakness2) {
-                    weakness.add(weak);
-                }
-                for (const x in remove) {
-                    weakness.delete(x);
-                }
-                for (const resist in resistance1) {
-                    resistance.add(resist);
-                }
-                for (const resist in resistance2) {
-                    resistance.add(resist);
-                }
-                for (const x in remove) {
-                    resistance.delete(x);
-                }
-
-            }*/
+            const sprite = pokemonData.sprites.front_default;
             
-
             const result = { //Result form
                 name: pokemonData.name, //Name of the pokemon
                 type: types, //Types of the pokemon
+                sprite: sprite,
                 weakness: Array.from(weakness),
                 resistance: Array.from(resistance),
                 immunity: Array.from(immunity),
