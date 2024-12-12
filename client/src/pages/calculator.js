@@ -1,6 +1,7 @@
 import '../styles/calculator.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import pokemonJson from "../public/pokemon_names.json"
 
 const Calculator = () => {
 
@@ -15,16 +16,18 @@ const Calculator = () => {
 
 
     // PLACEHOLDER: remember to replace with pokeAPI data later
-    const allPokemonNames = ['bulbasaur', 'charmander', 'squirtle', 'pikachu', 'jigglypuff', 'meowth', 'charizard'];
+    const allPokemonNames = pokemonJson;
+    // console.log(allPokemonNames)
 
     useEffect(() => {
-        //filter suggestions dynamically
+        // filter suggestions dynamically
         const filteredSuggestions = allPokemonNames.filter((name) =>
             name.toLowerCase().startsWith(searchInput.toLowerCase())
         );
+
         setSuggestions(filteredSuggestions);
         setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
-	setHighlightIndex(-1); //reset highlight
+        setHighlightIndex(-1); //reset highlight
     }, [searchInput]);
 
     const handleChange = (e) => {
@@ -69,35 +72,35 @@ const Calculator = () => {
 
 
     const navigate = useNavigate();
-    
+
     const handleSubmit = () => {
         if (isValid) {
             console.log(`Searching for ${searchInput}`);
             setErrorMessage(''); //clear error
 
-	// go to response page
-        navigate('/response', {
-            state: { 
-                pokemonData: { // MOCK DATA
-                    name: searchInput,
-                    weakness: ["water", "rock", "electric"],
-                    resistance: ["fire", "grass", "ice"],
-                    immunity: ["ghost"],
+            // go to response page
+            navigate('/response', {
+                state: {
+                    pokemonData: { // MOCK DATA
+                        name: searchInput,
+                        weakness: ["water", "rock", "electric"],
+                        resistance: ["fire", "grass", "ice"],
+                        immunity: ["ghost"],
+                    },
                 },
-            },
-        });
-	    
+            });
+
         } else {
             setErrorMessage('Please enter a valid Pokémon name.');
         }
     };
-    
-    
+
+
     return (
-	<div className="container_calc">
+        <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-		<div className="instruction-text">Enter a Pokémon name:</div>
+                <div className="instruction-text">Enter a Pokémon name:</div>
                 <div className="input-wrapper">
                     <input
                         type="text"
@@ -107,7 +110,7 @@ const Calculator = () => {
                         onChange={handleChange}
                         onFocus={() => setShowSuggestions(true)}
                         onBlur={handleBlur}
-			onKeyDown={handleKeyDown}
+                        onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
                     />
                     {showSuggestions && suggestions.length > 0 && (
@@ -117,7 +120,6 @@ const Calculator = () => {
                                     key={suggestion}
                                     onMouseDown={() => handleSuggestionClick(suggestion)} //prevent blur firing
                                     className={highlightIndex === index ? 'highlighted' : ''}
-                                    tabIndex="0"
                                     tabIndex="0"
                                 >
                                     {suggestion}
