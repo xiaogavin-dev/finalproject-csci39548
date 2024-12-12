@@ -25,33 +25,45 @@ const ResponsePage = () => {
         <div className="image-background">
             <div className="response-container">
                 <button className="back-button" onClick={() => navigate(-1)}>
-                    ←
+                    ← Go back to calculator
                 </button>
                 <h1 className="pokemon-name">{name}</h1>
                 <div className="type-container">
                     <div className="type-box">
                         <h2>Weakness</h2>
-                        {weakness.map((type) => (
+                        {weakness.length > 0 ? (
+                            weakness.map((type) => (
                             <div key={type} className={`type-label ${type}`}>
                                 {type}
                             </div>
-                        ))}
+                            ))
+                        ) : (
+                            <div className="blank">No weakness found</div>
+                        )}
                     </div>
                     <div className="type-box">
                         <h2>Resistance</h2>
-                        {resistance.map((type) => (
+                        {resistance.length > 0 ? (
+                            resistance.map((type) => (
                             <div key={type} className={`type-label ${type}`}>
                                 {type}
                             </div>
-                        ))}
+                            ))
+                        ) : (
+                                <div className="blank">No resistance found</div>
+                        )}
                     </div>
                     <div className="type-box">
                         <h2>Immunity</h2>
-                        {immunity.map((type) => (
+                        {immunity.length > 0 ? (
+                            immunity.map((type) => (
                             <div key={type} className={`type-label ${type}`}>
                                 {type}
                             </div>
-                        ))}
+                            ))
+                        ) : (
+                                <div className="blank">No immunity found</div>
+                        )}
                     </div>
                 </div>
             </div>

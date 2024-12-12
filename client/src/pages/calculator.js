@@ -1,7 +1,7 @@
 import '../styles/calculator.css'
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
+ 
 const Calculator = () => {
 
     // USING MOCK DATA FOR NOW
@@ -15,15 +15,16 @@ const Calculator = () => {
 
 
     // PLACEHOLDER: remember to replace with pokeAPI data later
-    const allPokemonNames = ['bulbasaur', 'charmander', 'squirtle', 'pikachu', 'jigglypuff', 'meowth', 'charizard'];
+    //const allPokemonNames = [];
 
     useEffect(() => {
         //filter suggestions dynamically
-        const filteredSuggestions = allPokemonNames.filter((name) =>
-            name.toLowerCase().startsWith(searchInput.toLowerCase())
-        );
-        setSuggestions(filteredSuggestions);
-        setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
+        //const filteredSuggestions = allPokemonNames.filter((name) =>
+        //    name.toLowerCase().startsWith(searchInput.toLowerCase())
+        //);
+        //setSuggestions(filteredSuggestions);
+        //setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
+        setIsValid(true);
 	setHighlightIndex(-1); //reset highlight
     }, [searchInput]);
 
@@ -70,26 +71,64 @@ const Calculator = () => {
 
     const navigate = useNavigate();
     
-    const handleSubmit = () => {
-        if (isValid) {
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch(`/pokemon/${searchInput}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error('Error fetching data');
+            } 
+
+            const data = await response.json();
+            if (!data || Object.keys(data).length === 0) {
+                throw new Error('No data returned from the server');
+            }
+
+            navigate('/response', {
+                state: {
+                    pokemonData: {
+                        name: data.name,
+                        weakness: data.weakness,
+                        resistance: data.resistance,
+                        immunity: data.immunity,
+                    },
+                },
+            });
+
+        } catch (error) {
+            console.error('Error:', error);
+            setErrorMessage('Please enter a valid Pokémon name.');
+        }
+
+
+        /*if (isValid) {
             console.log(`Searching for ${searchInput}`);
             setErrorMessage(''); //clear error
 
-	// go to response page
-        navigate('/response', {
-            state: { 
-                pokemonData: { // MOCK DATA
-                    name: searchInput,
-                    weakness: ["water", "rock", "electric"],
-                    resistance: ["fire", "grass", "ice"],
-                    immunity: ["ghost"],
+            const data = Object.values(dataToPass);
+            console.log(data);
+
+            const pokemonWeakness = data[4];
+            const pokemonResistance = data[5];
+            const pokemonImmunity = data[6];
+
+            // go to response page
+            navigate('/response', {
+                state: {
+                    pokemonData: {
+                        name: searchInput,
+                        weakness: [],
+                        resistance: [],
+                        immunity: [],
+                    },
                 },
-            },
-        });
-	    
+            });
+
         } else {
             setErrorMessage('Please enter a valid Pokémon name.');
-        }
+        }*/
     };
     
     
@@ -97,7 +136,7 @@ const Calculator = () => {
 	<div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
             <div className="input-container">
-		<div className="instruction-text">Enter a Pokémon name:</div>
+		<div className="instruction-text">Enter a Pokémon name or id:</div>
                 <div className="input-wrapper">
                     <input
                         type="text"
@@ -105,32 +144,18 @@ const Calculator = () => {
                         placeholder={!searchInput ? 'Search' : ''}
                         value={searchInput}
                         onChange={handleChange}
-                        onFocus={() => setShowSuggestions(true)}
+                        //onFocus={() => setShowSuggestions(true)}
                         onBlur={handleBlur}
 			onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
                     />
-                    {showSuggestions && suggestions.length > 0 && (
-                        <ul className="suggestions-list">
-                            {suggestions.map((suggestion, index) => (
-                                <li
-                                    key={suggestion}
-                                    onMouseDown={() => handleSuggestionClick(suggestion)} //prevent blur firing
-                                    className={highlightIndex === index ? 'highlighted' : ''}
-                                    tabIndex="0"
-                                    tabIndex="0"
-                                >
-                                    {suggestion}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                    
                 </div>
                 <button
-                    className={`send-button ${isValid ? 'active' : ''}`}
+                    className={`send-button`}
                     onClick={handleSubmit}
-                    disabled={!isValid}
-                    aria-disabled={!isValid}
+                    //disabled={!isValid}
+                    //aria-disabled={!isValid}
                 >
                     Send
                 </button>
