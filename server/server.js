@@ -87,12 +87,11 @@ app.get('/pokemon/:id', async (req, res) => {
                 }
             });
 
-            const remove = new Set();
-            remove.add(weakness.intersection(resistance));
-            for (const x in remove) {
-                weakness.delete(x);
-                resistance.delete(x);
-            }
+            const remove = weakness.intersection(resistance);
+            remove.forEach(val => {
+                weakness.delete(val);
+                resistance.delete(val);
+            });
 
              /*
              if(types.length === 0)
