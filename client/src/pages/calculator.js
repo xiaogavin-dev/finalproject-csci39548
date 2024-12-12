@@ -1,6 +1,7 @@
 import '../styles/calculator.css'
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
+import pokemonJson from "../public/pokemon_names.json"
 
 const Calculator = () => {
 
@@ -10,36 +11,21 @@ const Calculator = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [highlightIndex, setHighlightIndex] = useState(-1);
 
-    const [allPokemonNames, setAllPokemonNames] = useState([]);
-    const [showSuggestions, setShowSuggestions] = useState(false);
 
-    const suggestionsRef = useRef(null); // ref for the suggestions list
-    const inputRef = useRef(null); // ref for the input field
-
-    useEffect(() => {
-        const fetchPokemonNames = async () => {
-            try {
-                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10000'); // api call for all pokemon
-                const data = await response.json();
-                const names = data.results.map((pokemon) => pokemon.name);
-                setAllPokemonNames(names);
-            } catch (error) {
-                console.error('Error fetching Pokémon names:', error);
-            }
-        };
-        fetchPokemonNames();
-    }, []);
+    // PLACEHOLDER: remember to replace with pokeAPI data later
+    const allPokemonNames = pokemonJson;
+    // console.log(allPokemonNames)
 
     useEffect(() => {
         // filter suggestions dynamically
         const filteredSuggestions = allPokemonNames.filter((name) =>
             name.toLowerCase().startsWith(searchInput.toLowerCase())
         );
+
         setSuggestions(filteredSuggestions);
-        //setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
-        //setIsValid(true);
+        setIsValid(filteredSuggestions.includes(searchInput.toLowerCase()));
         setHighlightIndex(-1); //reset highlight
-    }, [searchInput, allPokemonNames]);
+    }, [searchInput]);
 
     const handleChange = (e) => {
         setSearchInput(e.target.value);
@@ -134,6 +120,8 @@ const Calculator = () => {
     };
 
 
+
+
     return (
         <div className="container_calc">
             <div className="top-center-text font-semibold">Type Calculator</div>
@@ -152,17 +140,14 @@ const Calculator = () => {
                         onKeyDown={handleKeyDown}
                         aria-label="Search Pokémon name"
                     />
-
                     {showSuggestions && suggestions.length > 0 && (
-                        <ul
-                            ref={suggestionsRef}
-                            className="suggestions-list"
-                        >
+                        <ul className="suggestions-list">
                             {suggestions.map((suggestion, index) => (
                                 <li
                                     key={suggestion}
-                                    className={highlightIndex === index ? 'highlight' : ''}
-                                    onMouseDown={() => handleSuggestionClick(suggestion)}
+                                    onMouseDown={() => handleSuggestionClick(suggestion)} //prevent blur firing
+                                    className={highlightIndex === index ? 'highlighted' : ''}
+                                    tabIndex="0"
                                 >
                                     {suggestion}
                                 </li>
