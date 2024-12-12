@@ -34,6 +34,11 @@ npm i
 
 Create a mongoDB account, (from class Lab5) with a db named `pokemon` and collection inside named `pokemon_types`
 
+make a .env file and paste in your db key with the template provided
+```
+MONGO_DB_URI=
+```
+
 Start dev backend:
 ```bash
 npm start dev
