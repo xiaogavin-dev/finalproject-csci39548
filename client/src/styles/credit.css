@@ -1,6 +1,6 @@
 /* styles.css */
 .container_credits {
-    background-image: url('../public/pokemon.credit.png'); /* Replace with your image path */
+    background-image: url('../public/pokemon.credit.jpeg'); /* Replace with your image path */
     background-size: cover; /* Makes the background cover the whole page */
     background-position: center; /* Centers the background image */
     background-attachment: fixed; /* Keeps the background fixed during scrolling */
