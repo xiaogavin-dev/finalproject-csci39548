@@ -85,9 +85,12 @@ app.get('/pokemon/:id', async (req, res) => {
                 }
             });
 
+            const sprite = pokemonData.sprites.front_default;
+
             const result = { //Result form
                 name: pokemonData.name, //Name of the pokemon
                 type: types, //Types of the pokemon
+                sprite: sprite,
                 weakness: Array.from(weakness),
                 resistance: Array.from(resistance),
                 immunity: Array.from(immunity),
